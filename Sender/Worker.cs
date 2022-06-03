@@ -18,9 +18,7 @@ namespace Sender
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            //   var (message, _) = await MessageInitializerCache<ProcessPressRelease>.InitializeMessage(new { PressReleaseID = 1});
-            // var sendEndPoint = await
-            var response = await _client.GetResponse<OrderAccepted>(new { OrderId = 123 });
+            await _client.GetResponse<OrderAccepted>(new { OrderId = 123 });
             
         }
     }
