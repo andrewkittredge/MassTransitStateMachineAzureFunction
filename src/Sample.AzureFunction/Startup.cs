@@ -17,15 +17,15 @@ namespace Sample.AzureFunction
         {
             builder.Services
                 .AddScoped<SubmitOrderFunctions>()
-                .AddScoped<AuditOrderFunctions>()
+              //  .AddScoped<AuditOrderFunctions>()
                 .AddScoped<SubmitOrderHttpFunction>()
                 .AddMassTransitForAzureFunctions(cfg =>
                     {
                         cfg.AddConsumersFromNamespaceContaining<ConsumerNamespace>();
-                        cfg.AddRequestClient<SubmitOrder>(new Uri("queue:submit-order"));
+                        cfg.AddRequestClient<SubmitOrder>(new Uri("queue:getting-started"));
                     },
-                    "AzureWebJobsServiceBus")
-                .AddMassTransitEventHub();
+                    "AzureWebJobsServiceBus");
+               // .AddMassTransitEventHub();
         }
     }
 }

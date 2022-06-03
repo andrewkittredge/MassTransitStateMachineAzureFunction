@@ -9,7 +9,7 @@ namespace Sample.AzureFunction
 {
     public class SubmitOrderFunctions
     {
-        const string SubmitOrderQueueName = "submit-order";
+        const string SubmitOrderQueueName = "getting-started";
         readonly IMessageReceiver _receiver;
 
         public SubmitOrderFunctions(IMessageReceiver receiver)
@@ -17,7 +17,7 @@ namespace Sample.AzureFunction
             _receiver = receiver;
         }
 
-        [FunctionName("SubmitOrder")]
+        [FunctionName("SubmitOrder")]  
         public Task SubmitOrderAsync([ServiceBusTrigger(SubmitOrderQueueName)] ServiceBusReceivedMessage message, CancellationToken cancellationToken)
         {
             return _receiver.HandleConsumer<SubmitOrderConsumer>(SubmitOrderQueueName, message, cancellationToken);
