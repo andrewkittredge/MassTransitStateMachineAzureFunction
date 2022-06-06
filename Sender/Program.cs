@@ -20,7 +20,7 @@ namespace Sender
             {
                 services.AddMassTransit(cfg =>
                 {
-                    cfg.AddRequestClient<SubmitOrder>(new Uri("queue:getting-started"));
+                    cfg.AddRequestClient<StartPressReleaseBatchFromSender>(new Uri("queue:getting-started"));
                     cfg.UsingAzureServiceBus((context, cfg) =>
                     {
                         cfg.Host("Endpoint=sb://cbandrewtest.servicebus.windows.net/;SharedAccessKeyName=MassTransit;SharedAccessKey=fD4VhRMToqsTBpfdyjAH1nqC7xIkqspjHaJUP9cdELQ=");

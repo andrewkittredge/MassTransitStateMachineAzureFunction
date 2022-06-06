@@ -17,17 +17,14 @@ namespace Sample.AzureFunction
         public override void Configure(IFunctionsHostBuilder builder)
         {
             builder.Services
-                .AddScoped<SubmitOrderFunctions>()
-              //  .AddScoped<AuditOrderFunctions>()
-                .AddScoped<SubmitOrderHttpFunction>()
+                .AddScoped<InitiatePressReleaseBatchFunction>()
                 .AddMassTransitForAzureFunctions(cfg =>
                     {
                         cfg.AddConsumersFromNamespaceContaining<ConsumerNamespace>();
-                        cfg.AddRequestClient<SubmitOrder>(new Uri("queue:getting-started"));
+                        cfg.AddRequestClient<StartPressReleaseBatchFromSender>(new Uri("queue:getting-started"));
                         cfg.AddSagaStateMachine<PressReleaseBatchStateMachine, PressReleaseBatchState>(typeof(PressReleaseBatchStateMachineDefinition)).MessageSessionRepository();
                     },
-                    "AzureWebJobsServiceBus");    
-               // .AddMassTransitEventHub();
+                    "AzureWebJobsServiceBus");
         }
     }
 }

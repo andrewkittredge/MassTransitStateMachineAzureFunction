@@ -14,7 +14,7 @@ namespace Sample.AzureFunction.StateMachines
             }));
         }
 
-        public Event<StartPressReleaseBatch> StartPressReleaseBatch { get; set; }
+        public Event<Contracts.StartPressReleaseBatch> StartPressReleaseBatch { get; set; }
 
 
     }
@@ -34,7 +34,7 @@ namespace Sample.AzureFunction.StateMachines
 
             var partition = endpointConfigurator.CreatePartitioner(8);
 
-            sagaConfigurator.Message<StartPressReleaseBatch>(x => x.UsePartitioner(partition, m => m.Message.BatchId));
+            sagaConfigurator.Message<Contracts.StartPressReleaseBatch>(x => x.UsePartitioner(partition, m => m.Message.BatchId));
         }
     }
 }
