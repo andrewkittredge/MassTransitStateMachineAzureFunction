@@ -5,7 +5,7 @@ using Sample.AzureFunction;
 
 namespace Sender
 {
-    public class Worker: BackgroundService
+    public class Worker : BackgroundService
     {
         readonly IRequestClient<SubmitOrder> _client;
         readonly ILogger<Worker> _logger;
@@ -19,7 +19,7 @@ namespace Sender
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await _client.GetResponse<OrderAccepted>(new { OrderId = 123 });
-            
+
         }
     }
 }

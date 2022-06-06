@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using MassTransit;
+using Sample.Contracts;
 
 namespace Sample.AzureFunction.Consumers
 {
@@ -10,7 +11,7 @@ namespace Sample.AzureFunction.Consumers
         public Task Consume(ConsumeContext<SubmitOrder> context)
         {
             LogContext.Debug?.Log("Processing Order: {OrderNumber}", context.Message.OrderNumber);
-
+            context.Publish<StartPressReleaseBatch>(new { });
             context.Publish<OrderReceived>(new
             {
                 context.Message.OrderNumber,

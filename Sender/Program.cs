@@ -10,7 +10,6 @@ namespace Sender
     {
         static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
             await CreateHostBuilder(args).Build().RunAsync();
         }
 
@@ -26,18 +25,8 @@ namespace Sender
                     {
                         cfg.Host("Endpoint=sb://cbandrewtest.servicebus.windows.net/;SharedAccessKeyName=MassTransit;SharedAccessKey=fD4VhRMToqsTBpfdyjAH1nqC7xIkqspjHaJUP9cdELQ=");
                         cfg.ConfigureEndpoints(context);
-
                     });
                 });
-                /*
-                services.AddMassTransitForAzureFunctions(
-                    cfg =>
-                    {
-                        cfg.AddConsumersFromNamespaceContaining<ConsumerNamespace>();
-                        cfg.AddRequestClient<SubmitOrder>(new Uri("queue:getting-started"));
-                    },
-                    configureBus: (x, configureBus) => configureBus.Host("Endpoint=sb://cbandrewtest.servicebus.windows.net/;SharedAccessKeyName=MassTransit;SharedAccessKey=fD4VhRMToqsTBpfdyjAH1nqC7xIkqspjHaJUP9cdELQ="));
-                */
                 services.AddHostedService<Worker>();
             });
             return builder;

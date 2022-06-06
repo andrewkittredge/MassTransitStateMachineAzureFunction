@@ -4,6 +4,7 @@ using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Sample.AzureFunction;
 using Sample.AzureFunction.Consumers;
+using Sample.AzureFunction.StateMachines;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -23,8 +24,9 @@ namespace Sample.AzureFunction
                     {
                         cfg.AddConsumersFromNamespaceContaining<ConsumerNamespace>();
                         cfg.AddRequestClient<SubmitOrder>(new Uri("queue:getting-started"));
+                        cfg.AddSagaStateMachine<PressReleaseBatchStateMachine, PressReleaseBatchState>(typeof(PressReleaseBatchStateMachineDefinition)).MessageSessionRepository();
                     },
-                    "AzureWebJobsServiceBus");
+                    "AzureWebJobsServiceBus");    
                // .AddMassTransitEventHub();
         }
     }
