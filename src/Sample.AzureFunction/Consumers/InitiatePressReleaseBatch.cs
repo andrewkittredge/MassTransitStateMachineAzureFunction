@@ -6,14 +6,14 @@ namespace Sample.AzureFunction.Consumers
     using Sample.Contracts;
 
     public class InitiatePressReleaseBatch :
-        IConsumer<StartPressReleaseBatchFromSender>
+        IConsumer<IStartPressReleaseBatchFromSender>
     {
-        public async Task Consume(ConsumeContext<StartPressReleaseBatchFromSender> context)
+        public async Task Consume(ConsumeContext<IStartPressReleaseBatchFromSender> context)
         {
             LogContext.Debug?.Log("Processing Order: {OrderNumber}", context.Message.OrderNumber);
-            await context.Publish<StartPressReleaseBatch>(new { BatchId = NewId.NextGuid(), OrderIds = new Guid[] { NewId.NextGuid(), NewId.NextGuid() } });
+            await context.Publish<IStartPressReleaseBatch>(new { BatchId = NewId.NextGuid(), OrderIds = new Guid[] { NewId.NextGuid(), NewId.NextGuid() } });
 
-            await context.RespondAsync<StartPressReleaseBatchFromSender>(context.Message);
+            await context.RespondAsync<IStartPressReleaseBatchFromSender>(context.Message);
         }
     }
 }

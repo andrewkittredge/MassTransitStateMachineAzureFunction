@@ -18,37 +18,16 @@
             DuringAny(When(StartPressReleaseBatch).Then(Initialize));
         }
 
-        public Event<StartPressReleaseBatch> StartPressReleaseBatch { get; set; }
+        public Event<IStartPressReleaseBatch> StartPressReleaseBatch { get; set; }
 
-        static void Initialize(BehaviorContext<PressReleaseBatchState, StartPressReleaseBatch> context)
+        private static void Initialize(BehaviorContext<PressReleaseBatchState, IStartPressReleaseBatch> context)
         {
             InitializeInstance(context.Saga, context.Message);
         }
 
-        static void InitializeInstance(PressReleaseBatchState instance, StartPressReleaseBatch data)
+        private static void InitializeInstance(PressReleaseBatchState instance, IStartPressReleaseBatch data)
         {
-
             instance.Total = data.OrderIds.Length;
-        }
-    }
-
-    internal class PressReleaseBatchStateMachineDefinition :
-    SagaDefinition<PressReleaseBatchState>
-    {
-        public PressReleaseBatchStateMachineDefinition()
-        {
-            ConcurrentMessageLimit = 8;
-        }
-
-        protected override void ConfigureSaga(IReceiveEndpointConfigurator endpointConfigurator, ISagaConfigurator<PressReleaseBatchState> sagaConfigurator)
-        {
-            Debug.WriteLine("Configuring Saga");
-            sagaConfigurator.UseMessageRetry(r => r.Immediate(5));
-            sagaConfigurator.UseInMemoryOutbox();
-
-            var partition = endpointConfigurator.CreatePartitioner(8);
-
-            sagaConfigurator.Message<StartPressReleaseBatch>(x => x.UsePartitioner(partition, m => m.Message.BatchId));
         }
     }
 }

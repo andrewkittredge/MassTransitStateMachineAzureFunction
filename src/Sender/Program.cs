@@ -23,7 +23,7 @@
             {
                 services.AddMassTransit(cfg =>
                 {
-                    cfg.AddRequestClient<StartPressReleaseBatchFromSender>(new Uri("queue:getting-started"));
+                    cfg.AddRequestClient<IStartPressReleaseBatchFromSender>(new Uri("queue:getting-started"));
                     cfg.UsingAzureServiceBus((context, cfg) =>
                     {
                         cfg.Host(serviceBusConnectionString);

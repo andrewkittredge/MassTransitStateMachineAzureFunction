@@ -9,18 +9,18 @@ namespace Sample.AzureFunction
 
     public class InitiatePressReleaseBatchFunction
     {
-        const string SubmitOrderQueueName = "getting-started";
-        readonly IMessageReceiver _receiver;
+        private const string SubmitOrderQueueName = "getting-started";
+        private readonly IMessageReceiver receiver;
 
         public InitiatePressReleaseBatchFunction(IMessageReceiver receiver)
         {
-            _receiver = receiver;
+            this.receiver = receiver;
         }
 
         [FunctionName("InitiatePressReleaseBatch")]
         public Task SubmitOrderAsync([ServiceBusTrigger(SubmitOrderQueueName)] ServiceBusReceivedMessage message, CancellationToken cancellationToken)
         {
-            return _receiver.HandleConsumer<InitiatePressReleaseBatch>(SubmitOrderQueueName, message, cancellationToken);
+            return receiver.HandleConsumer<InitiatePressReleaseBatch>(SubmitOrderQueueName, message, cancellationToken);
         }
     }
 }

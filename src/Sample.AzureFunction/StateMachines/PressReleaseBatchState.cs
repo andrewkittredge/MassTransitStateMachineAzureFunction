@@ -7,7 +7,7 @@
     {
         public Guid CorrelationId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public int Total;
+        public int Total { get; set; }
 
         public string CurrentState { get; set; }
     }
