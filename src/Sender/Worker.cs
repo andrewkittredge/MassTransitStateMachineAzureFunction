@@ -1,14 +1,14 @@
-﻿using MassTransit;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Sample.AzureFunction;
-
-namespace Sender
+﻿namespace Sender
 {
+    using MassTransit;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Sample.AzureFunction;
+
     public class Worker : BackgroundService
     {
-        readonly IRequestClient<StartPressReleaseBatchFromSender> _client;
-        readonly ILogger<Worker> _logger;
+        private readonly IRequestClient<StartPressReleaseBatchFromSender> _client;
+        private readonly ILogger<Worker> _logger;
         private readonly IHost _host;
 
         public Worker(IRequestClient<StartPressReleaseBatchFromSender> client, ILogger<Worker> logger, IHost host)
@@ -22,8 +22,7 @@ namespace Sender
         {
             _logger.LogInformation("Sending batch");
             await _client.GetResponse<StartPressReleaseBatchFromSender>(new { OrderId = 123, OrderNumber = 456 });
-            _host.StopAsync();  
-
+            _host.StopAsync();
         }
     }
 }

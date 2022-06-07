@@ -9,7 +9,6 @@ using Sample.AzureFunction.StateMachines;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
-
 namespace Sample.AzureFunction
 {
     public class Startup :
@@ -20,14 +19,15 @@ namespace Sample.AzureFunction
             Debug.WriteLine("Configing");
             builder.Services
                 .AddScoped<InitiatePressReleaseBatchFunction>()
-                .AddMassTransitForAzureFunctions(cfg =>
+                .AddMassTransitForAzureFunctions(
+                    cfg =>
                     {
                         cfg.AddConsumer<InitiatePressReleaseBatch>();
                         cfg.AddRequestClient<StartPressReleaseBatchFromSender>(new Uri("queue:getting-started"));
                         cfg.AddSagaStateMachine<PressReleaseBatchStateMachine, PressReleaseBatchState>(typeof(PressReleaseBatchStateMachineDefinition)).InMemoryRepository();
                     },
                     "AzureWebJobsServiceBus",
-                     (x, y) => y.ConfigureEndpoints(x)) ;
+                    (x, y) => y.ConfigureEndpoints(x));
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using MassTransit;
-using Sample.Contracts;
-using System.Diagnostics;
-
-namespace Sample.AzureFunction.StateMachines
+﻿namespace Sample.AzureFunction.StateMachines
 {
+    using System.Diagnostics;
+    using MassTransit;
+    using Sample.Contracts;
+
     internal class PressReleaseBatchStateMachine : MassTransitStateMachine<PressReleaseBatchState>
     {
         public PressReleaseBatchStateMachine()
@@ -18,8 +18,6 @@ namespace Sample.AzureFunction.StateMachines
             DuringAny(When(StartPressReleaseBatch).Then(Initialize));
         }
 
-
-
         public Event<StartPressReleaseBatch> StartPressReleaseBatch { get; set; }
 
         static void Initialize(BehaviorContext<PressReleaseBatchState, StartPressReleaseBatch> context)
@@ -29,10 +27,8 @@ namespace Sample.AzureFunction.StateMachines
 
         static void InitializeInstance(PressReleaseBatchState instance, StartPressReleaseBatch data)
         {
-            //instance.Action = data.Action;
+
             instance.Total = data.OrderIds.Length;
-           // instance.UnprocessedOrderIds = new Stack<Guid>(data.OrderIds);
-           // instance.ActiveThreshold = data.ActiveThreshold;
         }
     }
 
@@ -46,6 +42,7 @@ namespace Sample.AzureFunction.StateMachines
 
         protected override void ConfigureSaga(IReceiveEndpointConfigurator endpointConfigurator, ISagaConfigurator<PressReleaseBatchState> sagaConfigurator)
         {
+            Debug.WriteLine("Configuring Saga");
             sagaConfigurator.UseMessageRetry(r => r.Immediate(5));
             sagaConfigurator.UseInMemoryOutbox();
 

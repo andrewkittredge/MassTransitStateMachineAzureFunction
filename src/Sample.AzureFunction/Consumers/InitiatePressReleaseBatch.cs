@@ -1,10 +1,10 @@
-using System;
-using System.Threading.Tasks;
-using MassTransit;
-using Sample.Contracts;
-
 namespace Sample.AzureFunction.Consumers
 {
+    using System;
+    using System.Threading.Tasks;
+    using MassTransit;
+    using Sample.Contracts;
+
     public class InitiatePressReleaseBatch :
         IConsumer<StartPressReleaseBatchFromSender>
     {

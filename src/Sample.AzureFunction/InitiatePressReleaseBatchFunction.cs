@@ -1,12 +1,12 @@
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
-using MassTransit;
-using Microsoft.Azure.WebJobs;
-using Sample.AzureFunction.Consumers;
-
 namespace Sample.AzureFunction
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Azure.Messaging.ServiceBus;
+    using MassTransit;
+    using Microsoft.Azure.WebJobs;
+    using Sample.AzureFunction.Consumers;
+
     public class InitiatePressReleaseBatchFunction
     {
         const string SubmitOrderQueueName = "getting-started";
