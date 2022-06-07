@@ -10,7 +10,7 @@ namespace Sender
     {
         static async Task Main(string[] args)
         {
-            await CreateHostBuilder(args).Build().RunAsync();
+            await CreateHostBuilder(args).RunConsoleAsync();
         }
 
         private static IHostBuilder CreateHostBuilder(string[] args)
