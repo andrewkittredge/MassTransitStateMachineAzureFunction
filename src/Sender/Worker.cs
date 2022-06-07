@@ -22,7 +22,7 @@
         {
             logger.LogInformation("Sending batch");
             await client.GetResponse<IStartPressReleaseBatchFromSender>(new { OrderId = 123, OrderNumber = 456 });
-            host.StopAsync();
+            await host.StopAsync(stoppingToken);
         }
     }
 }
