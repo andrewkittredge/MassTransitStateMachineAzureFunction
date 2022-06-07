@@ -20,6 +20,7 @@ namespace Sender
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _logger.LogInformation("Sending batch");
             await _client.GetResponse<StartPressReleaseBatchFromSender>(new { OrderId = 123, OrderNumber = 456 });
             _host.StopAsync();  
 
