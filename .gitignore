@@ -64,3 +64,4 @@ artifacts/**
 artifacts_old/**
 /src/.ionide
 /Sender/local.settings.json
+/Sender/appsettings.json

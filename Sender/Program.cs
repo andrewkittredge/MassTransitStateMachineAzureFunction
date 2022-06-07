@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sample.AzureFunction;
@@ -15,15 +16,19 @@ namespace Sender
 
         private static IHostBuilder CreateHostBuilder(string[] args)
         {
-            var builder = Host.CreateDefaultBuilder(args);
-            builder.ConfigureServices((_, services) =>
+            using IHost host = Host.CreateDefaultBuilder(args).Build();
+            IConfiguration config = host.Services.GetRequiredService<IConfiguration>();
+            string serviceBusConnectionString = config.GetValue<string>("AzureWebJobsServiceBus");
+            var builder = Host.CreateDefaultBuilder(args);            
+            builder.ConfigureServices((hostBuilder, services) =>
             {
+                
                 services.AddMassTransit(cfg =>
                 {
                     cfg.AddRequestClient<StartPressReleaseBatchFromSender>(new Uri("queue:getting-started"));
                     cfg.UsingAzureServiceBus((context, cfg) =>
                     {
-                        cfg.Host("Endpoint=sb://cbandrewtest.servicebus.windows.net/;SharedAccessKeyName=MassTransit;SharedAccessKey=fD4VhRMToqsTBpfdyjAH1nqC7xIkqspjHaJUP9cdELQ=");
+                        cfg.Host(serviceBusConnectionString);
                         cfg.ConfigureEndpoints(context);
                     });
                 });
