@@ -26,7 +26,8 @@ namespace Sample.AzureFunction
                         cfg.AddRequestClient<StartPressReleaseBatchFromSender>(new Uri("queue:getting-started"));
                         cfg.AddSagaStateMachine<PressReleaseBatchStateMachine, PressReleaseBatchState>(typeof(PressReleaseBatchStateMachineDefinition)).InMemoryRepository();
                     },
-                    "AzureWebJobsServiceBus");
+                    "AzureWebJobsServiceBus",
+                     (x, y) => y.ConfigureEndpoints(x)) ;
         }
     }
 }
