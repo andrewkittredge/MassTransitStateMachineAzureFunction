@@ -8,15 +8,31 @@ namespace Sample.AzureFunction.StateMachines
     {
         public PressReleaseBatchStateMachine()
         {
+            InstanceState(x => x.CurrentState);
+            Event(() => StartPressReleaseBatch, x => Debug.WriteLine("In event"));
             Initially(When(StartPressReleaseBatch).Then(context =>
             {
                 Debug.WriteLine("Got batch");
             }));
+            DuringAny(When(StartPressReleaseBatch).Then(Initialize));
         }
 
-        public Event<Contracts.StartPressReleaseBatch> StartPressReleaseBatch { get; set; }
 
 
+        public Event<StartPressReleaseBatch> StartPressReleaseBatch { get; set; }
+
+        static void Initialize(BehaviorContext<PressReleaseBatchState, StartPressReleaseBatch> context)
+        {
+            InitializeInstance(context.Saga, context.Message);
+        }
+
+        static void InitializeInstance(PressReleaseBatchState instance, StartPressReleaseBatch data)
+        {
+            //instance.Action = data.Action;
+            instance.Total = data.OrderIds.Length;
+           // instance.UnprocessedOrderIds = new Stack<Guid>(data.OrderIds);
+           // instance.ActiveThreshold = data.ActiveThreshold;
+        }
     }
 
     internal class PressReleaseBatchStateMachineDefinition :
@@ -34,7 +50,7 @@ namespace Sample.AzureFunction.StateMachines
 
             var partition = endpointConfigurator.CreatePartitioner(8);
 
-            sagaConfigurator.Message<Contracts.StartPressReleaseBatch>(x => x.UsePartitioner(partition, m => m.Message.BatchId));
+            sagaConfigurator.Message<StartPressReleaseBatch>(x => x.UsePartitioner(partition, m => m.Message.BatchId));
         }
     }
 }

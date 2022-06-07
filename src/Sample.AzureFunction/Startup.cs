@@ -22,7 +22,7 @@ namespace Sample.AzureFunction
                     {
                         cfg.AddConsumersFromNamespaceContaining<ConsumerNamespace>();
                         cfg.AddRequestClient<StartPressReleaseBatchFromSender>(new Uri("queue:getting-started"));
-                        cfg.AddSagaStateMachine<PressReleaseBatchStateMachine, PressReleaseBatchState>(typeof(PressReleaseBatchStateMachineDefinition)).MessageSessionRepository();
+                        cfg.AddSagaStateMachine<PressReleaseBatchStateMachine, PressReleaseBatchState>(typeof(PressReleaseBatchStateMachineDefinition)).InMemoryRepository();
                     },
                     "AzureWebJobsServiceBus");
         }
