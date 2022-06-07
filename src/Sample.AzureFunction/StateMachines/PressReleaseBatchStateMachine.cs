@@ -8,6 +8,7 @@ namespace Sample.AzureFunction.StateMachines
     {
         public PressReleaseBatchStateMachine()
         {
+            Debug.WriteLine("Building State machine");
             InstanceState(x => x.CurrentState);
             Event(() => StartPressReleaseBatch, x => Debug.WriteLine("In event"));
             Initially(When(StartPressReleaseBatch).Then(context =>

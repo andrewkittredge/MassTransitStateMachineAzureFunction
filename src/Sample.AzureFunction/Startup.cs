@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using MassTransit;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ namespace Sample.AzureFunction
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
+            Debug.WriteLine("Configing");
             builder.Services
                 .AddScoped<InitiatePressReleaseBatchFunction>()
                 .AddMassTransitForAzureFunctions(cfg =>
