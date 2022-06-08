@@ -10,7 +10,7 @@
         {
             Debug.WriteLine("Building State machine");
             InstanceState(x => x.CurrentState);
-            Event(() => StartPressReleaseBatch, x => Debug.WriteLine("In event"));
+            Event(() => StartPressReleaseBatch, x => x.CorrelateById(c => c.Message.BatchId));
             Initially(When(StartPressReleaseBatch).Then(context =>
             {
                 Debug.WriteLine("Got batch");
