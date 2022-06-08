@@ -21,6 +21,7 @@
             var partition = endpointConfigurator.CreatePartitioner(8);
 
             sagaConfigurator.Message<StartPressReleaseBatch>(x => x.UsePartitioner(partition, m => m.Message.BatchId));
+            sagaConfigurator.Message<BatchJobDone>(x => x.UsePartitioner(partition, m => m.Message.BatchJobId));
         }
     }
 }

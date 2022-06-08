@@ -28,6 +28,7 @@ namespace Sample.AzureFunction
                 .AddMassTransitForAzureFunctions(
                     cfg =>
                     {
+                        cfg.AddConsumer<ProcessBatchJobConsumer>();
                         cfg.AddConsumer<InitiatePressReleaseBatchConsumer>();
                         cfg.AddRequestClient<IStartPressReleaseBatchFromSender>(new Uri("queue:getting-started"));
                         cfg.AddSagaStateMachine<PressReleaseBatchStateMachine, PressReleaseBatchState>(typeof(PressReleaseBatchStateMachineDefinition)).InMemoryRepository();
