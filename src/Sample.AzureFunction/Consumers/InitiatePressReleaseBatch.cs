@@ -5,6 +5,9 @@ namespace Sample.AzureFunction.Consumers
     using MassTransit;
     using Sample.Contracts;
 
+    /// <summary>
+    /// Starts the batch saga.
+    /// </summary>
     public class InitiatePressReleaseBatch :
         IConsumer<IStartPressReleaseBatchFromSender>
     {
