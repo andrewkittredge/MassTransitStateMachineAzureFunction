@@ -10,22 +10,24 @@
         {
             Debug.WriteLine("Building State machine");
             InstanceState(x => x.CurrentState);
-            Event(() => StartPressReleaseBatch, x => x.CorrelateById(c => c.Message.BatchId));
-            Initially(When(StartPressReleaseBatch).Then(context =>
+            Event(
+                () => StartPressReleaseBatch,
+                x => x.CorrelateById(c => c.Message.BatchId));
+            Initially(When(StartPressReleaseBatch).Then(Initialize).Then(context =>
             {
                 Debug.WriteLine("Got batch");
             }));
             DuringAny(When(StartPressReleaseBatch).Then(Initialize));
         }
 
-        public Event<IStartPressReleaseBatch> StartPressReleaseBatch { get; set; }
+        public Event<StartPressReleaseBatch> StartPressReleaseBatch { get; set; }
 
-        private static void Initialize(BehaviorContext<PressReleaseBatchState, IStartPressReleaseBatch> context)
+        private static void Initialize(BehaviorContext<PressReleaseBatchState, StartPressReleaseBatch> context)
         {
             InitializeInstance(context.Saga, context.Message);
         }
 
-        private static void InitializeInstance(PressReleaseBatchState instance, IStartPressReleaseBatch data)
+        private static void InitializeInstance(PressReleaseBatchState instance, StartPressReleaseBatch data)
         {
             instance.Total = data.OrderIds.Length;
         }

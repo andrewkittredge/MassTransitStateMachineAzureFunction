@@ -11,7 +11,7 @@ namespace Sample.AzureFunction.Consumers
         public async Task Consume(ConsumeContext<IStartPressReleaseBatchFromSender> context)
         {
             LogContext.Debug?.Log("Processing Order: {OrderNumber}", context.Message.OrderNumber);
-            await context.Publish<IStartPressReleaseBatch>(new { BatchId = NewId.NextGuid(), OrderIds = new Guid[] { NewId.NextGuid(), NewId.NextGuid() } });
+            await context.Publish(new StartPressReleaseBatch { BatchId = NewId.NextGuid(), OrderIds = new Guid[] { NewId.NextGuid(), NewId.NextGuid() } });
 
             await context.RespondAsync<IStartPressReleaseBatchFromSender>(context.Message);
         }

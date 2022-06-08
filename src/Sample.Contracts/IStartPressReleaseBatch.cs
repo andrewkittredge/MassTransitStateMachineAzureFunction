@@ -1,12 +1,12 @@
 ﻿namespace Sample.Contracts
 {
     /// <summary>
-    /// Coorespondes to BatchReceived in the example.  This is what the statemachine is supposed to consume.
+    /// Corresponds to BatchReceived in the example.  This is what the statemachine consumes.
     /// </summary>
-    public interface IStartPressReleaseBatch
+    public class StartPressReleaseBatch
     {
-        Guid BatchId { get; }
+        public Guid BatchId { get; set; }
 
-        Guid[] OrderIds { get; }
+        public Guid[] OrderIds { get; set; }
     }
 }

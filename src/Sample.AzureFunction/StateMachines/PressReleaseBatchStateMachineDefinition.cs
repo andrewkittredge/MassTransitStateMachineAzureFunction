@@ -20,7 +20,7 @@
 
             var partition = endpointConfigurator.CreatePartitioner(8);
 
-            sagaConfigurator.Message<IStartPressReleaseBatch>(x => x.UsePartitioner(partition, m => m.Message.BatchId));
+            sagaConfigurator.Message<StartPressReleaseBatch>(x => x.UsePartitioner(partition, m => m.Message.BatchId));
         }
     }
 }
