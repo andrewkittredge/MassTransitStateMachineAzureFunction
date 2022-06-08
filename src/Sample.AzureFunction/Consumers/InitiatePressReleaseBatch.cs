@@ -8,7 +8,7 @@ namespace Sample.AzureFunction.Consumers
     /// <summary>
     /// Starts the batch saga.
     /// </summary>
-    public class InitiatePressReleaseBatch :
+    public class InitiatePressReleaseBatchConsumer :
         IConsumer<IStartPressReleaseBatchFromSender>
     {
         public async Task Consume(ConsumeContext<IStartPressReleaseBatchFromSender> context)

@@ -20,7 +20,7 @@ namespace Sample.AzureFunction
         [FunctionName("InitiatePressReleaseBatch")]
         public Task SubmitOrderAsync([ServiceBusTrigger(SubmitOrderQueueName)] ServiceBusReceivedMessage message, CancellationToken cancellationToken)
         {
-            return receiver.HandleConsumer<InitiatePressReleaseBatch>(SubmitOrderQueueName, message, cancellationToken);
+            return receiver.HandleConsumer<InitiatePressReleaseBatchConsumer>(SubmitOrderQueueName, message, cancellationToken);
         }
     }
 }
